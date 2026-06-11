@@ -10,7 +10,7 @@ and hazard zones.
 In Progress
 
 ## Tech Stack
-- Python 3.14.5
+- Python 3.14
 - pygame
 - numpy
 - pandas
