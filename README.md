@@ -1,5 +1,4 @@
-# swarm-sim
-Multi-Agent Swarm Simulation for Autonomous Coordination
+## Multi-Agent Swarm Simulation for Autonomous Coordination
 
 ## Overview
 A discrete-time, agent-based simulation modeling autonomous swarm coordination. 
@@ -14,12 +13,3 @@ In Progress
 - pygame
 - numpy
 - pandas
-
-## Installation
-n/a.
-
-## Usage
-n/a.
-
-## Author
-Zach Vaughn
