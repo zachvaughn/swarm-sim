@@ -49,15 +49,16 @@ class Agent:
         return w_sep * sep_force + w_align * align_force + w_coh * coh_force
 
     def compute_potential_field(self, env: Environment,
-                                 k_att: float = 1.0, k_rep: float = 100.0, rho_0: float = 50.0) -> np.ndarray:
+                                k_att: float = 1.0, k_rep: float = 100.0, rho_0: float = 50.0) -> np.ndarray:
         # attractive force pulls the agent toward the destination
         att_force = k_att * (env.destination.center - self.position)
 
         # repulsive force pushes the agent away from the nearest obstacle
         rep_force = np.zeros(2)
-        nearest_dist = env.get_nearest_obstacle(self.position)
-        if nearest_dist is not None and nearest_dist <= rho_0 and nearest_dist > 0:
-            direction = self.position - env.obstacles[0].position # temp
+        nearest_dist, nearest_obstacle = env.get_nearest_obstacle(self.position)
+        if nearest_obstacle is not None and 0 < nearest_dist <= rho_0:
+            direction = (self.position - nearest_obstacle.position) / np.linalg.norm(
+                self.position - nearest_obstacle.position)
             rep_force = k_rep * (1.0 / nearest_dist - 1.0 / rho_0) * (1.0 / nearest_dist ** 2) * direction
 
         return att_force + rep_force
