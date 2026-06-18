@@ -30,7 +30,7 @@ class Agent:
         if not neighbors:
             return np.zeros(2)
 
-        # separation: steer away from neighbors that are too close
+        # separation steer away from neighbors that are too close
         sep_force = np.zeros(2)
         for other in neighbors:
             diff = self.position - other.position
@@ -38,11 +38,11 @@ class Agent:
             if dist_sq > 0:
                 sep_force += diff / dist_sq
 
-        # alignment: steer towards the average heading of neighbors
+        # alignment steer towards the average heading of neighbors
         avg_velocity = np.mean([other.velocity for other in neighbors], axis=0)
         align_force = avg_velocity - self.velocity
 
-        # cohesion: steer towards the average position of neighbors
+        # cohesion steer towards the average position of neighbors
         avg_position = np.mean([other.position for other in neighbors], axis=0)
         coh_force = avg_position - self.position
 
