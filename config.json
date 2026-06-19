@@ -24,7 +24,7 @@
     { "position": [400, 300], "size": 40 }
   ],
   "hazard_zones": [
-    { "center": [550, 200], "radius": 50, "removal_prob": 0.05 }
+    { "center": [550, 200], "radius": 100, "removal_prob": 0.05 }
   ],
   "max_steps": 500,
   "output_path": "output.csv"
