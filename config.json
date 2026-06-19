@@ -1,0 +1,31 @@
+{
+  "run_id": 1,
+  "environment": {
+    "width": 800,
+    "height": 600
+  },
+  "destination": {
+    "center": [750, 300],
+    "radius": 30
+  },
+  "spawn_area": {
+    "center": [50, 300],
+    "radius": 40
+  },
+  "swarm_size": 20,
+  "perception_radius": 50,
+  "max_speed": 5,
+  "weights": {
+    "separation": 1.5,
+    "alignment": 1.0,
+    "cohesion": 1.0
+  },
+  "obstacles": [
+    { "position": [400, 300], "size": 40 }
+  ],
+  "hazard_zones": [
+    { "center": [550, 200], "radius": 50, "removal_prob": 0.05 }
+  ],
+  "max_steps": 500,
+  "output_path": "output.csv"
+}
