@@ -1,9 +1,6 @@
 import numpy as np
 import random
 
-from zone import Zone
-from agent import Agent
-
 
 class HazardZone:
     def __init__(self, center: np.ndarray, radius: float, removal_prob: float):

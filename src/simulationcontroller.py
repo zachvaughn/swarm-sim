@@ -18,7 +18,7 @@ class SimulationController:
         self.timestep: int = 0 # current simulation timestep
 
     def load_config(self, path: str) -> None:
-        # load simulation parameters from a JSON config file
+        # load simulation parameters from the JSON config file
         with open(path, "r") as f:
             self.config = json.load(f)
 
