@@ -1,6 +1,10 @@
+from __future__ import annotations
 import numpy as np
 import random
+from typing import TYPE_CHECKING
 
+if TYPE_CHECKING:
+    from agent import Agent
 
 class HazardZone:
     def __init__(self, center: np.ndarray, radius: float, removal_prob: float):
