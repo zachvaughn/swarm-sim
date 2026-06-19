@@ -27,5 +27,5 @@
     { "center": [550, 200], "radius": 50, "removal_prob": 0.05 }
   ],
   "max_steps": 500,
-  "output_path": "output.csv"
+  "output_path": "output_data.csv"
 }
