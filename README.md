@@ -1,15 +1,97 @@
-## Multi-Agent Swarm Simulation for Autonomous Coordination
+# Multi-Agent Swarm Simulation for Autonomous Coordination
 
 ## Overview
 A discrete-time, agent-based simulation modeling autonomous swarm coordination. 
 Agents navigate a 2D environment toward a destination while avoiding obstacles 
 and hazard zones.
 
-## Status
-In Progress
+## Project Foundation
+The project foundation document can be found [here]. 
+This document contains a project overview and system description which includes each individual component, the system dynamics, and the core models and algorithms used within the project. 
+It also covers the implementation approach and a literature review with sources that support the core models and algorithms used. 
+Both the activity and class diagram can be found in the project foundation documentation.
 
-## Tech Stack
-- Python 3.14
-- pygame
+### Implemented so far
+- `Zone`, `Obstacle`, and `HazardZone` classes
+- `Agent` class with Reynolds' flocking rules (separation, alignment, cohesion)
+- `Agent` class with artificial potential field navigation (attraction/repulsion)
+- Probabilistic hazard zone evaluation (Bernoulli-based trial)
+- `Environment` class with obstacle and hazard zone queries
+- `DataLogger` class with cohesion, coverage, and status tracking
+- `SimulationController` tying together the full simulation loop
+- JSON-based configuration system
+- CSV export of  metrics
+- Verified runs (agents successfully navigate to destination)
+
+### Still to come
+- Pygame visualization of the simulation running in real time
+- Expanded data collection (centroid velocity, hazard encounters)
+- Parameter testing across multiple configurations
+- Statistical analysis and validation
+
+### Changes from original project foundation
+- CSV export currently uses Python's built-in `csv` module instead of `pandas` 
+  for simplicity. `pandas` may still be used later on.
+- `Environment.get_nearest_obstacle()` returns a tuple `(distance, obstacle)` 
+  instead of just a float as referenced in the UML Diagram, since the agent's potential field calculation needs 
+  a reference to the obstacle itself to compute repulsion direction.
+
+## Installation
+### Dependencies
+- Python 3.14.5
 - numpy
-- pandas
+- pygame (planned for visualization)
+
+### Setup
+**1. Clone the repository**
+ 
+    git clone https://github.com/zachvaughn/swarm-sim.git
+    cd swarm-sim
+ 
+**2. Create a virtual environment**
+ 
+    python -m venv .venv
+    source .venv/bin/activate
+ 
+**3. Install dependencies**
+ 
+    pip install -r requirements.txt
+
+## Usage
+Run the simulation from the `src/` directory:
+ 
+    python main.py
+ 
+This loads parameters from `config.json` at the project root, runs the
+simulation until all agents have arrived, been removed, or the max step
+count is reached, then exports results to a CSV file.
+
+### Configuration
+All simulation parameters are set in `config.json`, including:
+- Swarm size and spawn area
+- Perception radius and max speed
+- Flocking weight constants (separation, alignment, cohesion)
+- Obstacle and hazard zone placement
+- Max simulation steps and output file path
+
+### Expected Output
+Console output reporting the number of timesteps run and final agent status
+counts (arrived, removed, still active), followed by a CSV file containing
+per-timestep metrics. An example output can be found below:
+ 
+    Simulation finished after 159 timesteps.
+    Arrived: 18 | Removed: 2 | Still active: 0
+    Results exported to output.csv
+ 
+    Process finished with exit code 0
+
+## Architecture Overview
+- **`SimulationController`** — owns the environment, agent list, and logger;
+  runs the main simulation loop
+- **`Agent`** — represents an individual swarm member; computes flocking and
+  potential field forces at each timestep
+- **`Environment`** — holds obstacles, hazard zones, and the destination;
+  provides spatial queries for agents
+- **`Zone`** / **`Obstacle`** / **`HazardZone`** — environment
+  objects
+- **`DataLogger`** — tracks and exports simulation metrics
