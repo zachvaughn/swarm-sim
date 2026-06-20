@@ -1,7 +1,9 @@
+from __future__ import annotations
 import numpy as np
+from typing import TYPE_CHECKING
 
-from environment import Environment
-
+if TYPE_CHECKING:
+    from environment import Environment
 
 class Agent:
     def __init__(self, agent_id: int, position: np.ndarray, velocity: np.ndarray,
@@ -9,42 +11,42 @@ class Agent:
         self.id = agent_id
         self.position = position # current position as a 2D numpy array
         self.velocity = velocity # current velocity as a 2D numpy array
-        self.perception_radius = perception_radius  # how far the agent can sense neighbors
+        self.perception_radius_sq = perception_radius ** 2 # how far the agent can perceive neighbors
         self.max_speed = max_speed # maximum speed the agent can travel
         self.status = "active" # active, removed, or arrived
 
-    def get_neighbors(self, agents: list["Agent"]) -> list["Agent"]:
+    def get_neighbor_data(self, agents: list[Agent]) -> list[tuple[Agent, np.ndarray, float]]:
         # find all other active agents within perception radius
         neighbors = []
         for other in agents:
             if other.id == self.id or other.status != "active":
                 continue
-            distance = np.linalg.norm(other.position - self.position)
-            if distance <= self.perception_radius:
-                neighbors.append(other)
+            diff = self.position - other.position
+            dist_sq = np.dot(diff, diff)
+            if dist_sq <= self.perception_radius_sq:
+                neighbors.append((other, diff, dist_sq))
         return neighbors
 
-    def compute_flocking(self, neighbors: list["Agent"],
+    def compute_flocking(self, neighbor_data: list[tuple[Agent, np.ndarray, float]],
                           w_sep: float = 1.0, w_align: float = 1.0, w_coh: float = 1.0) -> np.ndarray:
         # separation, alignment, cohesion
-        if not neighbors:
+        if not neighbor_data:
             return np.zeros(2)
 
         # separation steer away from neighbors that are too close
         sep_force = np.zeros(2)
-        for other in neighbors:
-            diff = self.position - other.position
-            dist_sq = np.dot(diff, diff)
+        avg_velocity = np.zeros(2)
+        avg_position = np.zeros(2)
+
+        for other, diff, dist_sq in neighbor_data:
             if dist_sq > 0:
                 sep_force += diff / dist_sq
+            avg_velocity += other.velocity
+            avg_position += other.position
 
-        # alignment steer towards the average heading of neighbors
-        avg_velocity = np.mean([other.velocity for other in neighbors], axis=0)
-        align_force = avg_velocity - self.velocity
-
-        # cohesion steer towards the average position of neighbors
-        avg_position = np.mean([other.position for other in neighbors], axis=0)
-        coh_force = avg_position - self.position
+        count = len(neighbor_data)
+        align_force = (avg_velocity / count) - self.velocity
+        coh_force = (avg_position / count) - self.position
 
         return w_sep * sep_force + w_align * align_force + w_coh * coh_force
 
@@ -72,6 +74,5 @@ class Agent:
         self.position += self.velocity * dt
 
     def check_arrival(self, destination) -> None:
-        # mark the agent as arrived if it has reached the destination zone
         if destination.contains(self.position):
             self.status = "arrived"
