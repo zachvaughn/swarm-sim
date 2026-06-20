@@ -21,12 +21,12 @@ Both the activity and class diagram can be found in the project foundation docum
 - `SimulationController` tying together the full simulation loop
 - JSON-based configuration system
 - CSV export of  metrics
-- Verified runs (agents successfully navigate to destination)
+- Verified that agents successfully navigate to destination
 
 ### Still to come
 - Pygame visualization of the simulation running in real time
-- Expanded data collection (centroid velocity, hazard encounters)
-- Parameter testing across multiple configurations
+- Extra data collection (centroid velocity, hazard encounters)
+- Parameter testing across multiple configurations (currently testing)
 - Statistical analysis and validation
 
 ### Changes from original project foundation
