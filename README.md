@@ -31,7 +31,7 @@ Both the activity and class diagram can be found in the project foundation docum
 
 ### Changes from original project foundation
 - CSV export currently uses Python's built-in `csv` module instead of `pandas` 
-  for simplicity. `pandas` may still be used later on.
+  as it works fine for this project. `pandas` may still be used later on.
 - `Environment.get_nearest_obstacle()` returns a tuple `(distance, obstacle)` 
   instead of just a float as referenced in the UML Diagram, since the agent's potential field calculation needs 
   a reference to the obstacle itself to compute repulsion direction.
