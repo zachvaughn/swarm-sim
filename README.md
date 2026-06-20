@@ -5,12 +5,6 @@ A discrete-time, agent-based simulation modeling autonomous swarm coordination.
 Agents navigate a 2D environment toward a destination while avoiding obstacles 
 and hazard zones.
 
-## Project Foundation
-The project foundation document can be found [here]. 
-This document contains a project overview and system description which includes each individual component, the system dynamics, and the core models and algorithms used within the project. 
-It also covers the implementation approach and a literature review with sources that support the core models and algorithms used. 
-Both the activity and class diagram can be found in the project foundation documentation.
-
 ### Implemented so far
 - `Zone`, `Obstacle`, and `HazardZone` classes
 - `Agent` class with Reynolds' flocking rules (separation, alignment, cohesion)
