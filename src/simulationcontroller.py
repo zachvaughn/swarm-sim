@@ -8,7 +8,6 @@ from zone import Zone
 from obstacle import Obstacle
 from hazardzone import HazardZone
 
-
 class SimulationController:
     def __init__(self):
         self.config: dict = {} # load configuration parameters
@@ -69,9 +68,9 @@ class SimulationController:
             if agent.status != "active":
                 continue
 
-            neighbors = agent.get_neighbors(self.agents)
+            neighbors_data = agent.get_neighbor_data(self.agents)
             flock_force = agent.compute_flocking(
-                neighbors,
+                neighbors_data,
                 w_sep=self.config["weights"]["separation"],
                 w_align=self.config["weights"]["alignment"],
                 w_coh=self.config["weights"]["cohesion"]
