@@ -1,5 +1,7 @@
 import json
 import numpy as np
+from datetime import datetime
+from pathlib import Path
 
 from agent import Agent
 from environment import Environment
@@ -15,6 +17,7 @@ class SimulationController:
         self.environment: Environment = None # the simulation environment
         self.logger: DataLogger = None # handles metric logging and export
         self.timestep: int = 0 # current simulation timestep
+        self.output_path: Path = None
 
     def load_config(self, path: str) -> None:
         # load simulation parameters from the JSON config file
@@ -59,8 +62,13 @@ class SimulationController:
             )
             self.agents.append(agent)
 
-        self.logger = DataLogger(run_id=self.config.get("run_id", 0))
+        self.logger = DataLogger(run_id=self._get_next_run_id())
         self.timestep = 0
+
+        output_dir = Path("../outputs")
+        output_dir.mkdir(parents=True, exist_ok=True)
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        self.output_path = output_dir / f"output_{timestamp}.csv"
 
     def step(self) -> None:
         # advance the simulation by one timestep
@@ -89,11 +97,23 @@ class SimulationController:
         self.logger.log_step(self.timestep, self.agents)
         self.timestep += 1
 
+    def _get_next_run_id(self) -> int:
+        # read the last used run id from a counter file, increment it, and save it back
+        counter_path = Path("../run_counter.txt")
+        if counter_path.exists():
+            last_id = int(counter_path.read_text().strip())
+        else:
+            last_id = 0
+
+        next_id = last_id + 1
+        counter_path.write_text(str(next_id))
+        return next_id
+
     def run(self) -> None:
         # run the simulation until completion
         while not self.is_done():
             self.step()
-        self.logger.export_csv(self.config.get("output_path", "output.csv"))
+        self.logger.export_csv(self.output_path)
 
     def is_done(self) -> bool:
         # simulation ends when all agents are no longer active, or max steps reached

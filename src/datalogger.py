@@ -1,5 +1,6 @@
 import csv
 import numpy as np
+from pathlib import Path
 
 class DataLogger:
     def __init__(self, run_id: int):
@@ -51,10 +52,10 @@ class DataLogger:
         height = max(ys) - min(ys)
         return width * height
 
-    def export_csv(self, path: str) -> None:
+    def export_csv(self, path):
         # write all recorded metrics to a CSV file
-        if not self.records:
-            return
+        path = Path(path)
+        path.parent.mkdir(parents=True, exist_ok=True)
 
         with open(path, "w", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=self.records[0].keys())
