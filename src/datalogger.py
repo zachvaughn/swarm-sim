@@ -1,5 +1,5 @@
 import csv
-
+import numpy as np
 
 class DataLogger:
     def __init__(self, run_id: int):
@@ -33,7 +33,7 @@ class DataLogger:
         pair_count = 0
         for i in range(len(active_agents)):
             for j in range(i + 1, len(active_agents)):
-                dist = ((active_agents[i].position - active_agents[j].position) ** 2).sum() ** 0.5
+                dist = np.linalg.norm(active_agents[i].position - active_agents[j].position)
                 total_distance += dist
                 pair_count += 1
 
