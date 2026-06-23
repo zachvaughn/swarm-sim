@@ -37,7 +37,7 @@ and hazard zones.
 - pygame (planned for visualization)
 
 ### Setup
-**1. Clone the repository**
+**1. Clone the repository in your IDE**
  
     git clone https://github.com/zachvaughn/swarm-sim.git
     cd swarm-sim
