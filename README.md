@@ -73,11 +73,25 @@ Console output reporting the number of timesteps run and final agent status
 counts (arrived, removed, still active), followed by a CSV file containing
 per-timestep metrics. An example output can be found below:
  
+    Timestep 0: active=20, arrived=0, removed=0
+    Timestep 10: active=20, arrived=0, removed=0
+    Timestep 20: active=20, arrived=0, removed=0
+    Timestep 30: active=20, arrived=0, removed=0
+    Timestep 40: active=20, arrived=0, removed=0
+    Timestep 50: active=20, arrived=0, removed=0
+    Timestep 60: active=20, arrived=0, removed=0
+    Timestep 70: active=20, arrived=0, removed=0
+    Timestep 80: active=20, arrived=0, removed=0
+    Timestep 90: active=20, arrived=0, removed=0
+    Timestep 100: active=20, arrived=0, removed=0
+    Timestep 110: active=18, arrived=0, removed=2
+    Timestep 120: active=18, arrived=0, removed=2
+    Timestep 130: active=13, arrived=4, removed=3
+    Timestep 140: active=2, arrived=15, removed=3
+    Timestep 150: active=1, arrived=16, removed=3
     Simulation finished after 159 timesteps.
-    Arrived: 18 | Removed: 2 | Still active: 0
-    Results exported to output.csv
- 
-    Process finished with exit code 0
+    Arrived: 17 | Removed: 3 | Still active: 0
+    Results exported to ../outputs/output_2026-06-23_06-50-23.csv
 
 ## Architecture Overview
 - **`SimulationController`** — owns the environment, agent list, and logger;
