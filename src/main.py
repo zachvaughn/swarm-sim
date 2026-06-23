@@ -17,7 +17,7 @@ def main():
 
     print(f"Simulation finished after {controller.timestep} timesteps.")
     print(f"Arrived: {arrived} | Removed: {removed} | Still active: {active}")
-    print(f"Results exported to {controller.config['output_path']}")
+    print(f"Results exported to {controller.output_path}")
 
 
 if __name__ == "__main__":

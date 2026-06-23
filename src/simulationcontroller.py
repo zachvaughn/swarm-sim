@@ -95,6 +95,14 @@ class SimulationController:
                     break
 
         self.logger.log_step(self.timestep, self.agents)
+
+        # print a progress update every 10 timesteps
+        if self.timestep % 10 == 0:
+            active = sum(1 for a in self.agents if a.status == "active")
+            arrived = sum(1 for a in self.agents if a.status == "arrived")
+            removed = sum(1 for a in self.agents if a.status == "removed")
+            print(f"Timestep {self.timestep}: active={active}, arrived={arrived}, removed={removed}")
+
         self.timestep += 1
 
     def _get_next_run_id(self) -> int:
