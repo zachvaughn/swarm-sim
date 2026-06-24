@@ -14,7 +14,7 @@ and hazard zones.
 - `DataLogger` class with cohesion, coverage, and status tracking
 - `SimulationController` tying together the full simulation loop
 - JSON-based configuration system
-- CSV export of  metrics
+- CSV export of metrics
 - Verified that agents successfully navigate to destination
 
 ### Still to come
@@ -43,18 +43,24 @@ and hazard zones.
     cd swarm-sim
  
 **2. Create a virtual environment**
+macOS / Linux:
  
     python -m venv .venv
     source .venv/bin/activate
+
+Windows (PowerShell):
+
+    python -m venv .venv
+    .venv\Scripts\Activate.ps1
  
 **3. Install dependencies**
  
     pip install -r requirements.txt
 
 ## Usage
-Run the simulation from the `src/` directory:
+To run the simulation, open the project directly once it has been cloned and run `main.py` from the `src` directory, or run it via terminal:
  
-    python main.py
+    python src/main.py
  
 This loads parameters from `config.json` at the project root, runs the
 simulation until all agents have arrived, been removed, or the max step
