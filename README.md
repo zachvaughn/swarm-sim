@@ -43,6 +43,7 @@ and hazard zones.
     cd swarm-sim
  
 **2. Create a virtual environment**
+
 macOS / Linux:
  
     python -m venv .venv
