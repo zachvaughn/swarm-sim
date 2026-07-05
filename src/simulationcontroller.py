@@ -13,7 +13,7 @@ from hazardzone import HazardZone
 
 class SimulationController:
     def __init__(self):
-        self.config: dict = {} # load configuration parameters
+        self.config: dict = {} # load the configuration parameters
         self.agents: list[Agent] = [] # list of all agents in the simulation
         self.environment: Environment = None # the simulation environment
         self.logger: DataLogger = None # handles metric logging and export

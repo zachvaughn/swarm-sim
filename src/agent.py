@@ -75,7 +75,7 @@ class Agent:
             self.velocity = (self.velocity / speed) * self.max_speed
         self.position += self.velocity * dt
 
-        # clamp position to stay within environment bounds
+        # clamp position to stay within the environment bounds
         self.position[0] = np.clip(self.position[0], 0, env.width)
         self.position[1] = np.clip(self.position[1], 0, env.height)
 
