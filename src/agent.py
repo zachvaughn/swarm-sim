@@ -55,13 +55,15 @@ class Agent:
         # attractive force pulls the agent toward the destination
         att_force = k_att * (env.destination.center - self.position)
 
-        # repulsive force pushes the agent away from the nearest obstacle
+        # repulsive force pushes the agent away from every obstacle within influence range
         rep_force = np.zeros(2)
-        nearest_dist, nearest_obstacle = env.get_nearest_obstacle(self.position)
-        if nearest_obstacle is not None and 0 < nearest_dist <= rho_0:
-            direction = (self.position - nearest_obstacle.position) / np.linalg.norm(
-                self.position - nearest_obstacle.position)
-            rep_force = k_rep * (1.0 / nearest_dist - 1.0 / rho_0) * (1.0 / nearest_dist ** 2) * direction
+        nearby_obstacles = env.get_obstacles_within(self.position, rho_0)
+        for obstacle in nearby_obstacles:
+            dist = obstacle.distance_to(self.position)
+            if dist <= 0:
+                continue
+            direction = (self.position - obstacle.position) / np.linalg.norm(self.position - obstacle.position)
+            rep_force += k_rep * (1.0 / dist - 1.0 / rho_0) * (1.0 / dist ** 2) * direction
 
         return att_force + rep_force
 

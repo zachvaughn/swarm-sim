@@ -22,7 +22,8 @@
     "cohesion": 1.0
   },
   "obstacles": [
-    { "position": [400, 300], "size": 40 }
+    { "position": [400, 300], "size": 40 },
+    { "position": [500, 350], "size": 30 }
   ],
   "hazard_zones": [
     { "center": [550, 200], "radius": 100, "removal_prob": 0.05 }

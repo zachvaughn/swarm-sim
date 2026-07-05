@@ -4,7 +4,6 @@ from obstacle import Obstacle
 from hazardzone import HazardZone
 from zone import Zone
 
-
 class Environment:
     def __init__(self, width: int, height: int, destination: Zone):
         self.width = width # width of the simulation grid
@@ -22,6 +21,10 @@ class Environment:
         nearest_obstacle = min(self.obstacles, key=lambda obs: obs.distance_to(pos))
         nearest_distance = nearest_obstacle.distance_to(pos)
         return nearest_distance, nearest_obstacle
+
+    def get_obstacles_within(self, pos: np.ndarray, radius: float) -> list[Obstacle]:
+        # returns all obstacles whose influence radius overlaps the given radius from pos
+        return [obs for obs in self.obstacles if obs.distance_to(pos) <= radius]
 
     def get_hazard_zones_at(self, pos: np.ndarray) -> list[HazardZone]:
         # returns all hazard zones that contain the given position
