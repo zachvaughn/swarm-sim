@@ -67,13 +67,17 @@ class Agent:
 
         return att_force + rep_force
 
-    def update(self, force: np.ndarray, dt: float = 1.0):
+    def update(self, force: np.ndarray, env: Environment, dt: float = 1.0):
         # update velocity and position based on combined force
         self.velocity += force * dt
         speed = np.linalg.norm(self.velocity)
         if speed > self.max_speed:
             self.velocity = (self.velocity / speed) * self.max_speed
         self.position += self.velocity * dt
+
+        # clamp position to stay within environment bounds
+        self.position[0] = np.clip(self.position[0], 0, env.width)
+        self.position[1] = np.clip(self.position[1], 0, env.height)
 
     def check_arrival(self, destination) -> None:
         if destination.contains(self.position):

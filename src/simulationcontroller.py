@@ -71,7 +71,8 @@ class SimulationController:
         self.logger = DataLogger(run_id=self._get_next_run_id())
         self.timestep = 0
 
-        output_dir = Path("../outputs")
+        project_root = Path(__file__).resolve().parent.parent
+        output_dir = project_root / "outputs"
         output_dir.mkdir(parents=True, exist_ok=True)
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         self.output_path = output_dir / f"output_{timestamp}.csv"
@@ -92,7 +93,7 @@ class SimulationController:
             field_force = agent.compute_potential_field(self.environment)
             total_force = flock_force + field_force
 
-            agent.update(total_force)
+            agent.update(total_force, self.environment)
             agent.check_arrival(self.environment.destination)
 
             for hz in self.environment.get_hazard_zones_at(agent.position):
@@ -113,7 +114,8 @@ class SimulationController:
 
     def _get_next_run_id(self) -> int:
         # read the last used run id from a counter file, increment it, and save it back
-        counter_path = Path("../run_counter.txt")
+        project_root = Path(__file__).resolve().parent.parent
+        counter_path = project_root / "run_counter.txt"
         if counter_path.exists():
             last_id = int(counter_path.read_text().strip())
         else:
