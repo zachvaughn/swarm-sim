@@ -1,4 +1,5 @@
 import json
+import random
 import numpy as np
 from datetime import datetime
 from pathlib import Path
@@ -25,6 +26,11 @@ class SimulationController:
             self.config = json.load(f)
 
     def initialize(self) -> None:
+        # set up RNG
+        seed = self.config.get("seed")
+        self.rng = np.random.default_rng(seed)
+        random.seed(seed)
+
         # build the environment and spawn agents based on the loaded config
         destination = Zone(
             center=np.array(self.config["destination"]["center"], dtype=float),
@@ -52,7 +58,7 @@ class SimulationController:
 
         for i in range(self.config["swarm_size"]):
             spawn_pos = np.array(self.config["spawn_area"]["center"], dtype=float) + \
-                        np.random.uniform(-1, 1, size=2) * self.config["spawn_area"]["radius"]
+                        self.rng.uniform(-1, 1, size=2) * self.config["spawn_area"]["radius"]
             agent = Agent(
                 agent_id=i,
                 position=spawn_pos,

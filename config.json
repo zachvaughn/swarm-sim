@@ -1,5 +1,6 @@
 {
   "run_id": 1,
+  "seed": 42,
   "environment": {
     "width": 800,
     "height": 600
