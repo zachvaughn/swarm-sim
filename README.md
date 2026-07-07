@@ -21,10 +21,10 @@ and hazard zones.
 - Configurable potential field weights (k_att, k_rep, rho_0) via config.json
 - Random seed support for reproducible runs
 - Agent position clamping to environment bounds
+- Extra data collection (centroid velocity, hazard encounters)
+- Parameter testing across multiple configurations
 
 ### Still to come
-- Extra data collection (centroid velocity, hazard encounters)
-- Parameter testing across multiple configurations (currently testing)
 - Statistical analysis and validation
 
 ### Changes from original project foundation
@@ -70,8 +70,14 @@ Windows (PowerShell):
 
 ## Usage
 To run the simulation, open the project directly once it has been cloned and run `main.py` from the `src` directory, or run it via terminal:
- 
+
     python src/main.py
+
+This runs the `baseline` configuration by default. You can also run one of the other named scenarios in the `configs/` folder by passing its name as an argument:
+
+    python src/main.py high_swarm_size
+    python src/main.py high_hazard
+    python src/main.py tight_perception
  
 This loads parameters from `config.json` at the project root, runs the
 simulation until all agents have arrived, been removed, or the max step

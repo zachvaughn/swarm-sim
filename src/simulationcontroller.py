@@ -159,7 +159,7 @@ class SimulationController:
                     agent.status = "removed"
                     break
 
-        self.logger.log_step(self.timestep, self.agents)
+        self.logger.log_step(self.timestep, self.agents, self.environment)
 
         # print a progress update every 10 timesteps
         if self.timestep % 10 == 0:
