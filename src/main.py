@@ -28,6 +28,7 @@ def main():
     active = sum(1 for a in controller.agents if a.status == "active")
 
     print(f"Simulation finished after {controller.timestep} timesteps.")
+    print(f"Execution time: {controller.get_elapsed_time():.2f} seconds")
     print(f"Arrived: {arrived} | Removed: {removed} | Still active: {active}")
     print(f"Results exported to {controller.output_path}")
 

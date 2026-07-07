@@ -1,5 +1,6 @@
 import json
 import random
+import time
 import numpy as np
 from datetime import datetime
 from pathlib import Path
@@ -25,7 +26,55 @@ class SimulationController:
         with open(path, "r") as f:
             self.config = json.load(f)
 
+        self._validate_config()
+
+    def _validate_config(self) -> None:
+        # check that required fields exist
+        required_fields = [
+            "environment", "destination", "spawn_area", "swarm_size",
+            "perception_radius", "max_speed", "weights", "potential_field",
+            "obstacles", "hazard_zones", "max_steps"
+        ]
+        missing = [field for field in required_fields if field not in self.config]
+        if missing:
+            raise ValueError(f"Config file is missing required field(s): {', '.join(missing)}")
+
+        # validate numeric ranges
+        if self.config["swarm_size"] <= 0:
+            raise ValueError(f"swarm_size must be positive, got {self.config['swarm_size']}")
+
+        if self.config["max_speed"] <= 0:
+            raise ValueError(f"max_speed must be positive, got {self.config['max_speed']}")
+
+        if self.config["perception_radius"] <= 0:
+            raise ValueError(f"perception_radius must be positive, got {self.config['perception_radius']}")
+
+        if self.config["max_steps"] <= 0:
+            raise ValueError(f"max_steps must be positive, got {self.config['max_steps']}")
+
+        # validate environment bounds
+        env = self.config["environment"]
+        if env["width"] <= 0 or env["height"] <= 0:
+            raise ValueError(f"environment width/height must be positive, got {env['width']}x{env['height']}")
+
+        # validate destination and spawn area are within bounds
+        dest = self.config["destination"]
+        if not (0 <= dest["center"][0] <= env["width"] and 0 <= dest["center"][1] <= env["height"]):
+            raise ValueError(f"destination center {dest['center']} is outside environment bounds")
+
+        # validate hazard zone probabilities
+        for hz in self.config["hazard_zones"]:
+            if not (0 <= hz["removal_prob"] <= 1):
+                raise ValueError(f"hazard zone removal_prob must be between 0 and 1, got {hz['removal_prob']}")
+
+        # validate flocking weights are non-negative
+        for key, value in self.config["weights"].items():
+            if value < 0:
+                raise ValueError(f"weight '{key}' must be non-negative, got {value}")
+
     def initialize(self) -> None:
+        self.start_time = time.perf_counter()
+
         # set up RNG
         seed = self.config.get("seed")
         self.rng = np.random.default_rng(seed)
@@ -76,6 +125,10 @@ class SimulationController:
         output_dir.mkdir(parents=True, exist_ok=True)
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
         self.output_path = output_dir / f"output_{timestamp}.csv"
+
+    def get_elapsed_time(self) -> float:
+        # returns elapsed time in seconds
+        return time.perf_counter() - self.start_time
 
     def step(self) -> None:
         # advance the simulation by one timestep
