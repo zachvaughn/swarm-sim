@@ -79,7 +79,7 @@ This runs the `baseline` configuration by default. You can also run one of the o
     python src/main.py high_hazard
     python src/main.py tight_perception
  
-This loads parameters from `config.json` at the project root, runs the
+This loads parameters from the chosen config in `configs/`, runs the
 simulation until all agents have arrived, been removed, or the max step
 count is reached, then exports results to a CSV file.
 
