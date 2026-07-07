@@ -16,9 +16,13 @@ and hazard zones.
 - JSON-based configuration system
 - CSV export of metrics
 - Verified that agents successfully navigate to destination
+- `Renderer` class for real-time pygame visualization
+- Multi-obstacle repulsion in potential field calculation
+- Configurable potential field weights (k_att, k_rep, rho_0) via config.json
+- Random seed support for reproducible runs
+- Agent position clamping to environment bounds
 
 ### Still to come
-- Pygame visualization of the simulation running in real time
 - Extra data collection (centroid velocity, hazard encounters)
 - Parameter testing across multiple configurations (currently testing)
 - Statistical analysis and validation
@@ -29,12 +33,18 @@ and hazard zones.
 - `Environment.get_nearest_obstacle()` returns a tuple `(distance, obstacle)` 
   instead of just a float as referenced in the UML Diagram, since the agent's potential field calculation needs 
   a reference to the obstacle itself to compute repulsion direction.
+- Added a `Renderer` class (not in the original UML) to separate visualization 
+  logic from simulation logic.
+- `Environment.get_obstacles_within()` was added to support summing repulsion 
+  across all nearby obstacles, rather than only the single nearest one.
+- Added a `seed` field to `config.json` and random number generation 
+  onto  `np.random.Generator` so simulation runs are reproducible.
 
 ## Installation
 ### Dependencies
 - Python 3.14.5
 - numpy
-- pygame (planned for visualization)
+- pygame
 
 ### Setup
 **1. Clone the repository in your IDE**
@@ -75,7 +85,7 @@ All simulation parameters are set in `config.json`, including:
 - Obstacle and hazard zone placement
 - Max simulation steps and output file path
 
-### Expected Output
+### Expected Output and Screenshot
 Console output reporting the number of timesteps run and final agent status
 counts (arrived, removed, still active), followed by a CSV file containing
 per-timestep metrics. An example output can be found below:
@@ -85,20 +95,28 @@ per-timestep metrics. An example output can be found below:
     Timestep 20: active=20, arrived=0, removed=0
     Timestep 30: active=20, arrived=0, removed=0
     Timestep 40: active=20, arrived=0, removed=0
-    Timestep 50: active=20, arrived=0, removed=0
-    Timestep 60: active=20, arrived=0, removed=0
-    Timestep 70: active=20, arrived=0, removed=0
-    Timestep 80: active=20, arrived=0, removed=0
-    Timestep 90: active=20, arrived=0, removed=0
-    Timestep 100: active=20, arrived=0, removed=0
-    Timestep 110: active=18, arrived=0, removed=2
-    Timestep 120: active=18, arrived=0, removed=2
-    Timestep 130: active=13, arrived=4, removed=3
-    Timestep 140: active=2, arrived=15, removed=3
-    Timestep 150: active=1, arrived=16, removed=3
-    Simulation finished after 159 timesteps.
-    Arrived: 17 | Removed: 3 | Still active: 0
-    Results exported to ../outputs/output_2026-06-23_06-50-23.csv
+    Timestep 50: active=19, arrived=0, removed=1
+    Timestep 60: active=17, arrived=0, removed=3
+    Timestep 70: active=16, arrived=0, removed=4
+    Timestep 80: active=13, arrived=0, removed=7
+    Timestep 90: active=12, arrived=0, removed=8
+    Timestep 100: active=11, arrived=0, removed=9
+    Timestep 110: active=11, arrived=0, removed=9
+    Timestep 120: active=7, arrived=4, removed=9
+    Timestep 130: active=7, arrived=4, removed=9
+    Timestep 140: active=7, arrived=4, removed=9
+    Timestep 150: active=2, arrived=9, removed=9
+    Simulation finished after 155 timesteps.
+    Arrived: 11 | Removed: 9 | Still active: 0
+    Results exported to outputs/output_2026-07-07_19-00-26.csv
+
+At Timestep ~50:
+<img width="912" height="744" alt="timestep 50" src="https://github.com/user-attachments/assets/e564187f-3e4c-4e94-9feb-1ff0c5512d14" />
+
+At Timestep ~140
+<img width="912" height="744" alt="timestep 140" src="https://github.com/user-attachments/assets/83d862c8-373c-451a-ad65-6ead6d776430" />
+
+
 
 ## Architecture Overview
 - **`SimulationController`** — owns the environment, agent list, and logger;
