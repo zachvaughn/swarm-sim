@@ -1,6 +1,6 @@
 {
   "run_id": 1,
-  "seed": 42,
+  "seed": 20,
   "environment": {
     "width": 800,
     "height": 600
@@ -11,7 +11,7 @@
   },
   "spawn_area": {
     "center": [50, 300],
-    "radius": 40
+    "radius": 300
   },
   "swarm_size": 20,
   "perception_radius": 50,
@@ -21,12 +21,20 @@
     "alignment": 1.0,
     "cohesion": 1.0
   },
+  "potential_field": {
+  "k_att": 1.0,
+  "k_rep": 500.0,
+  "rho_0": 100.0
+  },
   "obstacles": [
-    { "position": [400, 300], "size": 40 },
-    { "position": [500, 350], "size": 30 }
+  { "position": [250, 250], "size": 25 },
+  { "position": [450, 400], "size": 30 },
+  { "position": [600, 200], "size": 20 }
   ],
   "hazard_zones": [
-    { "center": [550, 200], "radius": 100, "removal_prob": 0.05 }
+  { "center": [350, 450], "radius": 80, "removal_prob": 0.05 },
+  { "center": [500, 150], "radius": 80, "removal_prob": 0.05 },
+  { "center": [650, 400], "radius": 70, "removal_prob": 0.05 }
   ],
   "max_steps": 500,
   "output_path": "output.csv"

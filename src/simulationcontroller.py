@@ -90,7 +90,12 @@ class SimulationController:
                 w_align=self.config["weights"]["alignment"],
                 w_coh=self.config["weights"]["cohesion"]
             )
-            field_force = agent.compute_potential_field(self.environment)
+            field_force = agent.compute_potential_field(
+                self.environment,
+                k_att=self.config["potential_field"]["k_att"],
+                k_rep=self.config["potential_field"]["k_rep"],
+                rho_0=self.config["potential_field"]["rho_0"]
+            )
             total_force = flock_force + field_force
 
             agent.update(total_force, self.environment)
