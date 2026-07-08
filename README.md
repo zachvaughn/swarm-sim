@@ -134,3 +134,4 @@ At Timestep ~140
 - **`Zone`** / **`Obstacle`** / **`HazardZone`** — environment
   objects
 - **`DataLogger`** — tracks and exports simulation metrics
+- **`Renderer`** -- renders pygame visualization window
