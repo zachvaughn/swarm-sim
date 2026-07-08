@@ -69,24 +69,34 @@ Windows (PowerShell):
 To run the simulation, open the project directly once it has been cloned and run `main.py` from the `src` directory, or run it via terminal:
 
     python src/main.py
-
-This runs the `baseline` configuration by default. You can also run one of the other named scenarios in the `configs/` folder by passing its name as an argument:
-
-    python src/main.py high_swarm_size
-    python src/main.py high_hazard
-    python src/main.py tight_perception
  
-This loads parameters from the chosen config in `configs/`, runs the
+This loads parameters from the baseline configuration in `configs/`, runs the
 simulation until all agents have arrived, been removed, or the max step
 count is reached, then exports results to a CSV file.
 
 ### Configuration
-All simulation parameters are set in `baseline.json` or any of the other configuration files, including:
+All simulation parameters are set via JSON config files located in `configs/`. 
+The `baseline` scenario runs by default as shown above, but any scenario can be selected by 
+passing its name as a command-line argument:
+
+    python src/main.py baseline
+    python src/main.py high_swarm_size
+    python src/main.py high_hazard
+    python src/main.py tight_perception
+    python src/main.py low_speed
+    python src/main.py high_separation
+    python src/main.py high_cohesion
+    python src/main.py dense_obstacles
+    python src/main.py combined_stress
+    python src/main.py no_hazards
+
+Each config includes:
 - Swarm size and spawn area
 - Perception radius and max speed
 - Flocking weight constants (separation, alignment, cohesion)
+- Potential field weights (attraction, repulsion, influence radius)
 - Obstacle and hazard zone placement
-- Max simulation steps and output file path
+- Max simulation steps and random seed
 
 ### Expected Output and Screenshot
 Console output reporting the number of timesteps run and final agent status
