@@ -1,5 +1,4 @@
 {
-  "run_id": 2,
   "seed": 20,
   "environment": {
     "width": 800,
@@ -7,19 +6,19 @@
   },
   "destination": {
     "center": [750, 300],
-    "radius": 30
-  },
+    "radius": 30 },
   "spawn_area": {
     "center": [50, 300],
     "radius": 300
   },
-  "swarm_size": 60,
+  "swarm_size": 100,
   "perception_radius": 50,
-  "max_speed": 5,
+  "max_speed": 2,
   "weights": {
     "separation": 1.5,
     "alignment": 1.0,
-    "cohesion": 1.0 },
+    "cohesion": 0.5
+  },
   "potential_field": {
     "k_att": 1.0,
     "k_rep": 500.0,

@@ -13,10 +13,10 @@
     "radius": 300
   },
   "swarm_size": 50,
-  "perception_radius": 15,
+  "perception_radius": 50,
   "max_speed": 2,
   "weights": {
-    "separation": 1.5,
+    "separation": 4.0,
     "alignment": 1.0,
     "cohesion": 0.5
   },

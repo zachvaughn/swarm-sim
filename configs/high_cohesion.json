@@ -13,12 +13,12 @@
     "radius": 300
   },
   "swarm_size": 50,
-  "perception_radius": 15,
+  "perception_radius": 50,
   "max_speed": 2,
   "weights": {
     "separation": 1.5,
     "alignment": 1.0,
-    "cohesion": 0.5
+    "cohesion": 4.0
   },
   "potential_field": {
     "k_att": 1.0,
