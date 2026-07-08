@@ -5,7 +5,7 @@ A discrete-time, agent-based simulation modeling autonomous swarm coordination.
 Agents navigate a 2D environment toward a destination while avoiding obstacles 
 and hazard zones.
 
-### Implemented so far
+### Implementation
 - `Zone`, `Obstacle`, and `HazardZone` classes
 - `Agent` class with Reynolds' flocking rules (separation, alignment, cohesion)
 - `Agent` class with artificial potential field navigation (attraction/repulsion)
@@ -18,14 +18,11 @@ and hazard zones.
 - Verified that agents successfully navigate to destination
 - `Renderer` class for real-time pygame visualization
 - Multi-obstacle repulsion in potential field calculation
-- Configurable potential field weights (k_att, k_rep, rho_0) via config.json
+- Configurable potential field weights (k_att, k_rep, rho_0) via baseline.json (or any configuration file preset)
 - Random seed support for reproducible runs
 - Agent position clamping to environment bounds
 - Extra data collection (centroid velocity, hazard encounters)
 - Parameter testing across multiple configurations
-
-### Still to come
-- Statistical analysis and validation
 
 ### Changes from original project foundation
 - CSV export currently uses Python's built-in `csv` module instead of `pandas` 
@@ -84,7 +81,7 @@ simulation until all agents have arrived, been removed, or the max step
 count is reached, then exports results to a CSV file.
 
 ### Configuration
-All simulation parameters are set in `config.json`, including:
+All simulation parameters are set in `baseline.json` or any of the other configuration files, including:
 - Swarm size and spawn area
 - Perception radius and max speed
 - Flocking weight constants (separation, alignment, cohesion)
@@ -113,6 +110,7 @@ per-timestep metrics. An example output can be found below:
     Timestep 140: active=7, arrived=4, removed=9
     Timestep 150: active=2, arrived=9, removed=9
     Simulation finished after 155 timesteps.
+    Execution time: 5.57 seconds
     Arrived: 11 | Removed: 9 | Still active: 0
     Results exported to outputs/output_2026-07-07_19-00-26.csv
 
