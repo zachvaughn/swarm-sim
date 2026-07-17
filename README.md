@@ -24,19 +24,6 @@ and hazard zones.
 - Extra data collection (centroid velocity, hazard encounters)
 - Parameter testing across multiple configurations
 
-### Changes from original project foundation
-- CSV export currently uses Python's built-in `csv` module instead of `pandas` 
-  as it works fine for this project. `pandas` may still be used later on.
-- `Environment.get_nearest_obstacle()` returns a tuple `(distance, obstacle)` 
-  instead of just a float as referenced in the UML Diagram, since the agent's potential field calculation needs 
-  a reference to the obstacle itself to compute repulsion direction.
-- Added a `Renderer` class (not in the original UML) to separate visualization 
-  logic from simulation logic.
-- `Environment.get_obstacles_within()` was added to support summing repulsion 
-  across all nearby obstacles, rather than only the single nearest one.
-- Added a `seed` field to `config.json` and random number generation 
-  onto  `np.random.Generator` so simulation runs are reproducible.
-
 ## Installation
 ### Dependencies
 - Python 3.14.5
