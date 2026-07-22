@@ -5,7 +5,7 @@ A discrete-time, agent-based simulation modeling autonomous swarm coordination.
 Agents navigate a 2D environment toward a destination while avoiding obstacles 
 and hazard zones.
 
-### Implementation
+### Features
 - `Zone`, `Obstacle`, and `HazardZone` classes
 - `Agent` class with Reynolds' flocking rules (separation, alignment, cohesion)
 - `Agent` class with artificial potential field navigation (attraction/repulsion)
@@ -88,7 +88,7 @@ Each config includes:
 ### Expected Output and Screenshot
 Console output reporting the number of timesteps run and final agent status
 counts (arrived, removed, still active), followed by a CSV file containing
-per-timestep metrics. An example output can be found below:
+per-timestep metrics. An example output can be found below (all outputs (CSV/JSON) are sent to the `outputs/` folder):
  
     Timestep 0: active=50, arrived=0, removed=0
     Timestep 10: active=50, arrived=0, removed=0
@@ -139,7 +139,7 @@ Visualization at timestep ~60:
 
 ## Architecture Overview
 - **`SimulationController`** — owns the environment, agent list, and logger;
-  runs the main simulation loop
+  runs the main simulation loop and checks for config validation
 - **`Agent`** — represents an individual swarm member; computes flocking and
   potential field forces at each timestep
 - **`Environment`** — holds obstacles, hazard zones, and the destination;
